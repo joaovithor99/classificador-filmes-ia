@@ -69,7 +69,8 @@ if st.button("Analisar Sentimento"):
         
         # Agora divide as palavras já limpas
         palavras = texto_limpo.lower().split()
-        tokens = [word_index.get(p, 2) for p in palavras]
+        # Adicionamos a trava de segurança matemática (< 10000)
+        tokens = [word_index.get(p, 2) if word_index.get(p, 2) < 10000 else 2 for p in palavras]
         tokens_pad = pad_sequences([tokens], maxlen=250, padding='post')
         
         # 3. A IA faz a previsão
